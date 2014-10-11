@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Broadcast title</h1>
+                <span>Broadcast description</span>
+            </div>
+        </div>
+        <div id="player-row" class="row">
+            <div class="col-md-9">
+                <div class="player embed-responsive embed-responsive-16by9">
+                    <object class="embed-responsive-item" type="application/x-shockwave-flash" id="live_embed_player_flash"
+                            data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=longedok"
+                            bgcolor="#000000">
+                        <param name="allowFullScreen" value="true" />
+                        <param name="allowScriptAccess" value="always" />
+                        <param name="allowNetworking" value="all" />
+                        <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+                        <param name="flashvars"
+                               value="hostname=www.twitch.tv&channel=longedok&auto_play=false&start_volume=100" />
+                    </object>
+                </div>
+            </div>
+
+            <div id="chat-col" class="col-md-3">
+                <div id="chat">
+                    <div class="message-area">
+                        <div class="chat-message">
+                            <span class="nickname">foo_user:</span> a remark regarding the quality of the broadcast.
+                        </div>
+                        <div class="chat-message">
+                            <span class="nickname">bar_user:</span> an answer to the previous comment.
+                        </div>
+                        <div class="chat-message">
+                            <span class="nickname">baz_user:</span> casual chitchat.
+                        </div>
+                    </div>
+                    <textarea></textarea>
+                    <button class="btn-default">Send</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Broadcast Info</h1>
+                <span>Maybe a comment section</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script type="text/javascript" src="{% static 'app.js' %}"></script>
+</body>
+</html>

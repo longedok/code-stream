@@ -1,0 +1,20 @@
+{
+  "name": "code_stream",
+  "version": "0.0.0",
+  "authors": [
+    "Evgeniy Kartavykh <longedok@gmail.com>"
+  ],
+  "description": "Broadcasting service for programmers",
+  "main": "js/app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

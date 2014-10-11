@@ -1,0 +1,18 @@
+#chat textarea {
+    position: absolute;
+    width: 100%;
+    bottom: 33px;
+}
+
+#chat button {
+    position: absolute;
+    bottom: 0px;
+}
+
+#player-row {
+    height: 476px;
+}
+
+#chat-col {
+    height: 100%;
+}

@@ -1,0 +1,7 @@
+ui/public
+ui/bower_components
+ui/node_modules
+.idea
+
+*.sqlite3
+**/*.pyc
