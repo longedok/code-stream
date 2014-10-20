@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html ng-app="CodeStream">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+</head>
+<body>
+    <div class="container" ng-controller="MainCtrl">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Code Stream</h1>
+                <a href="{% url 'profile' %}">profile</a>
+                <a href ng-click="login()">log in</a>
+                <a href ng-click="signup()">sign up</a>
+                <a href ng-click="logout()">log out</a>
+            </div>
+        </div>
+
+        {% block main %}{% endblock %}
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/ws4redis.js' %}"></script>
+    <script type="text/javascript" src="{% static 'app.js' %}"></script>
+</body>
+</html>

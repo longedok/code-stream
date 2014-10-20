@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {% verbatim %}
+                <form ng-controller="StreamCreateCtrl">
+                    <legend>Start stream:</legend>
+
+                    <div ng-class="{'has-error': errors.non_field_errors}">
+                        <span class="help-block" ng-repeat="error in errors.non_field_errors">
+                            {{ error }}
+                        </span>
+                    </div>
+
+                    <div ng-class="{'has-success': model}" ng-show="model">
+                        <span class="help-block">
+                            Stream with name "{{ model.name }}" has been succefully created!
+                        </span>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': errors.name}">
+                        <label>Name:</label>
+                        <input class="form-control" type="text" ng-model="input.name" required>
+                        <span class="help-block" ng-repeat="error in errors.name">
+                            {{ error }}
+                        </span>
+                    </div>
+
+                    <button class="btn-primary" type="submit" ng-click="submit()">Start</button>
+                </form>
+
+                <form ng-controller="StreamSeriesCreateCtrl">
+                    <legend>Create a series of streams:</legend>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input class="form-control" type="text" ng-model="input.name">
+                    </div>
+
+
+                    <button class="btn-primary" type="submit" ng-click="submit()">Start</button>
+                </form>
+
+                <form ng-controller="TechnologyCreateCtrl">
+                    <legend>Create technology:</legend>
+
+                    <div ng-class="{'has-error': errors.non_field_errors}">
+                        <span class="help-block" ng-repeat="error in errors.non_field_errors">
+                            {{ error }}
+                        </span>
+                    </div>
+
+                    <div ng-class="{'has-success': model}" ng-show="model">
+                        <span class="help-block">
+                            Technology with name "{{ model.name }}" and url "{{ model.url }}" has been succefully created!
+                        </span>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': errors.name}">
+                        <label>Name:</label>
+                        <input class="form-control" type="text" ng-model="input.name" required>
+                        <span class="help-block" ng-repeat="error in errors.name">
+                            {{ error }}
+                        </span>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': errors.url}">
+                        <label>Url:</label>
+                        <input class="form-control" type="text" ng-model="input.url" required>
+                        <span class="help-block" ng-repeat="error in errors.url">
+                            {{ error }}
+                        </span>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': errors.description}">
+                        <label>Description:</label>
+                        <textarea class="form-control" ng-model="input.description" required>
+                        </textarea>
+                        <span class="help-block" ng-repeat="error in errors.description">
+                            {{ error }}
+                        </span>
+                    </div>
+
+                    <button class="btn-primary" type="submit" ng-click="submit()">Create</button>
+                </form>
+                {% endverbatim %}
+            </div>
+            <div class="col-md-9">
+                <h1>User's profile:</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}

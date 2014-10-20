@@ -29,6 +29,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static',
+    'ws4redis.context_processors.default',
+)
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,7 +42,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'ws4redis',
+
     'stream',
+    'chat',
+    'users'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,7 +62,15 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'code_stream.urls'
 
-WSGI_APPLICATION = 'code_stream.wsgi.application'
+WSGI_APPLICATION = 'ws4redis.django_runserver.application'
+
+WEBSOCKET_URL = '/ws/'
+
+TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static',
+    'ws4redis.context_processors.default'
+)
 
 
 # Database
@@ -90,3 +109,5 @@ TEMPLATE_DIRS = (
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ui/public'),
 )
+
+APPEND_SLASH = False
