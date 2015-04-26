@@ -13,23 +13,32 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, attrs):
         user = authenticate(username=attrs['username'], password=attrs['password'])
         if not user:
-            raise serializers.ValidationError(_("There're no users with this username/password combination"))
+            raise serializers.ValidationError(_("Wrong username or password."))
         return attrs
 
 
-class RegisterSerializer(serializers.Serializer):
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password', 'password2')
+
     username = serializers.CharField(max_length=30, required=True)
     email = serializers.EmailField(required=True)
     password = serializers.CharField(max_length=100, required=True)
     password2 = serializers.CharField(max_length=100, required=True)
 
-    def validate_username(self, attrs, source):
-        same_user = User.objects.filter(is_active=True, username__iexact=attrs['username'])
-        if same_user.exists():
-            raise serializers.ValidationError(_("There's already a user registered with this username"))
-        return attrs
+    def create(self, validated_data):
+        validated_data.pop('password2')
+        return super(RegisterSerializer, self).create(validated_data)
 
-    def validate_password2(self, attrs, source):
+    def validate_username(self, value):
+        same_user = User.objects.filter(is_active=True, username__iexact=value)
+        if same_user.exists():
+            raise serializers.ValidationError(_("Username is taken. Choose another one."))
+
+        return value
+
+    def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError(_("Passwords don't match"))
         return attrs

@@ -8,6 +8,7 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User, related_name='info')
 
     github_profile = models.URLField(null=True, blank=True)
+    twitch_channel = models.CharField(max_length=255)
 
 
 @receiver(post_save, sender=User)

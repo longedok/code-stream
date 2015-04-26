@@ -1,6 +1,7 @@
 ui/public
 ui/bower_components
 ui/node_modules
+ui/npm-debug.log
 .idea
 
 *.sqlite3

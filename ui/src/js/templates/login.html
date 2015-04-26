@@ -1,29 +1,22 @@
-<div class="modal-body">
-    <form>
-        <legend>Log in:</legend>
-
-        <div ng-class="{'has-error': errors.non_field_errors}">
-            <span class="help-block" ng-repeat="error in errors.non_field_errors">
-                {{ error }}
-            </span>
-        </div>
-
-        <div class="form-group" ng-class="{'has-error': errors.username}">
-            <label>Username:</label>
-            <input class="form-control" type="text" ng-model="input.username" required>
-            <span class="help-block" ng-repeat="error in errors.username">
-                {{ error }}
-            </span>
-        </div>
-
-        <div class="form-group" ng-class="{'has-error': errors.password}">
-            <label>Password:</label>
-            <input class="form-control" type="text" ng-model="input.password" required>
-            <span class="help-block" ng-repeat="error in errors.password">
-                {{ error }}
-            </span>
-        </div>
-
-        <button class="btn-primary" type="submit" ng-click="submit()">Login</button>
-    </form>
+<div class="modal-header">
+    <span class="modal-title">Log in</span>
 </div>
+
+<form>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input ng-model="input.username" class="form-control" id="username" name="username"  type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input ng-model="input.password" class="form-control" id="password" name="password"  type="password">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="submit()">Log in</button>
+        <button class="btn btn-link" ng-click="$dismiss()">Cancel</button>
+    </div>
+</form>

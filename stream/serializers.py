@@ -16,9 +16,6 @@ class StreamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stream
 
-    def pre_save(self, obj):
-        obj.owner = self.request.user
-
 
 class TechnologySerialzier(serializers.ModelSerializer):
     class Meta:

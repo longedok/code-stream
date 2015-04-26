@@ -34,14 +34,33 @@ class StreamSeries(models.Model):
     subscribers = models.ManyToManyField(User, related_name='subscribed_streams')
 
 
+class StreamQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(pk__in=ActiveStream.objects.values_list('stream_id', flat=True))
+
+
+class StreamManager(models.Manager):
+    def get_queryset(self):
+        return StreamQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
+
 class Stream(models.Model):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     created = util_fields.AutoCreatedField()
     finished = models.DateTimeField(null=True, blank=True)
 
     owner = models.ForeignKey(User, null=True, blank=True)
     series = models.ForeignKey(StreamSeries, null=True, blank=True)
-    technologies = models.ManyToManyField(Technology)
+    technologies = models.ManyToManyField(Technology, null=True, blank=True)
+
+    objects = StreamManager()
+
+
+class ActiveStream(models.Model):
+    stream = models.ForeignKey(Stream)
 
 
 class Event(models.Model):

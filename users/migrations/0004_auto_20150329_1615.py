@@ -12,10 +12,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='userinfo',
             name='subscribed_users',
-            field=models.ManyToManyField(related_name=b'subscribers', to=b'users.UserInfo'),
         ),
         migrations.AlterField(
             model_name='userinfo',

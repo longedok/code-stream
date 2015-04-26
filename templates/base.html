@@ -1,29 +1,34 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html ng-app="CodeStream">
-<head lang="en">
+<html lang="en" ng-app="CodeStream">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Code Stream</title>
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
 </head>
-<body>
-    <div class="container" ng-controller="MainCtrl">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Code Stream</h1>
-                <a href="{% url 'profile' %}">profile</a>
-                <a href ng-click="login()">log in</a>
-                <a href ng-click="signup()">sign up</a>
-                <a href ng-click="logout()">log out</a>
-            </div>
+<body ng-controller="MainController as mainController">
+    <header class="clearfix">
+        <h1 class="pull-left">Code Stream</h1>
+        <div class="user-info pull-right">
+            {% if user.is_authenticated %}
+                <a href="#">Account Settings</a>
+                <a href ng-click="mainController.startStream()">Start stream</a>
+                <a href ng-click="mainController.logout()">Log out</a>
+            {% else %}
+                <a href ng-click="mainController.createAccount()">Create account</a>
+                <a href ng-click="mainController.login()">Log in</a>
+            {% endif %}
         </div>
+    </header>
 
+    <section class="container-fluid">
         {% block main %}{% endblock %}
-    </div>
+    </section>
 
     <script type="text/javascript" src="{% static 'js/ws4redis.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendors.js' %}"></script>
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
 </body>
 </html>

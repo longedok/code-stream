@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%$t@s)6=wo42c4u=9e@$e09hl$4f*hm2%1u96z6i$(a#!%)ha3'
+SECRET_KEY = os.environ['CODE_STREAM_DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'ws4redis',
+    'social.apps.django_app.default',
 
     'stream',
     'chat',
@@ -58,6 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'code_stream.urls'
@@ -67,9 +69,9 @@ WSGI_APPLICATION = 'ws4redis.django_runserver.application'
 WEBSOCKET_URL = '/ws/'
 
 TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.static',
-    'ws4redis.context_processors.default'
+    'ws4redis.context_processors.default',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 
@@ -110,4 +112,20 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ui/public'),
 )
 
-APPEND_SLASH = False
+APPEND_SLASH = True
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social.backends.github.GithubOAuth2',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = os.environ['SOCIAL_GITHUB_CLIENT_ID']
+SOCIAL_AUTH_GITHUB_SECRET = os.environ['SOCIAL_GITHUB_CLIENT_SECRET']
+
+# CELERY SETTINGS
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+TWITCH_CLIENT_ID = 'lte1ik8vpybuvugm8k509q27jzblq6s'

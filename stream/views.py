@@ -1,22 +1,36 @@
-from rest_framework import viewsets
+from django.views.generic import ListView
+from rest_framework import viewsets, permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from stream.models import StreamSeries, Stream, Technology
-from stream.serializers import StreamSerializer, TechnologySerialzier, SeriesSerializer
+from stream.models import Technology, ActiveStream, Stream
+from stream.serializers import TechnologySerialzier, StreamSerializer
 
-
-class StreamSeriesViewSet(viewsets.ModelViewSet):
-    queryset = StreamSeries.objects.all()
-    serializer_class = SeriesSerializer
-
-
-class StreamViewSet(viewsets.ModelViewSet):
-    queryset = Stream.objects.all()
-    serializer_class = StreamSerializer
-
-    def stop(self):
-        pass
+from tasks import start_stream
 
 
 class TechnologyViewSet(viewsets.ModelViewSet):
     queryset = Technology.objects.all()
     serializer_class = TechnologySerialzier
+
+
+class IndexView(ListView):
+    model = ActiveStream
+    template_name = 'stream/index.html'
+
+
+class StreamsView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        serializer = StreamSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user = request.user
+
+            stream = serializer.save(owner=user)
+            start_stream.delay(stream.pk, user.info.twitch_channel)
+
+            return Response(StreamSerializer(stream).data, status=status.HTTP_200_OK)
+
+    def get(self, request):
+        return Response(StreamSerializer(Stream.objects.active(), many=True).data, status=status.HTTP_200_OK)

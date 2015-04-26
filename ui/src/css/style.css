@@ -9,10 +9,36 @@
     bottom: 0px;
 }
 
-#player-row {
+#playerRow {
     height: 476px;
 }
 
-#chat-col {
+#chatCol {
     height: 100%;
+}
+
+header {
+    padding: 0 20px;
+}
+
+.user-info {
+    margin: 10px 0 0 0;
+}
+
+.user-info a {
+    border-left: 1px rgb(142, 137, 137) solid;
+    padding: 0 8px 0 8px;
+    font-size: 12pt;
+}
+
+.user-info a:first-child {
+    border-left: none;
+}
+
+.modal-header .modal-title {
+    font-size: 1.5em;
+}
+
+.modal-footer {
+    text-align: left;
 }

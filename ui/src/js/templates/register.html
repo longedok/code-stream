@@ -1,45 +1,32 @@
-<div class="modal-body">
-    <form>
-        <legend>Sign in:</legend>
-
-        <div ng-class="{'has-error': errors.non_field_errors}">
-            <span class="help-block" ng-repeat="error in errors.non_field_errors">
-                {{ error }}
-            </span>
-        </div>
-
-        <div class="form-group" ng-class="{'has-error': errors.username}">
-            <label>Username:</label>
-            <input class="form-control" type="text" ng-model="input.username" required>
-            <span class="help-block" ng-repeat="error in errors.username">
-                {{ error }}
-            </span>
-        </div>
-        
-        <div class="form-group" ng-class="{'has-error': errors.email}">
-            <label>Email:</label>
-            <input class="form-control" type="text" ng-model="input.email" required>
-            <span class="help-block" ng-repeat="error in errors.email">
-                {{ error }}
-            </span>
-        </div>        
-
-        <div class="form-group" ng-class="{'has-error': errors.password}">
-            <label>Password:</label>
-            <input class="form-control" type="text" ng-model="input.password" required>
-            <span class="help-block" ng-repeat="error in errors.password">
-                {{ error }}
-            </span>
-        </div>
-
-        <div class="form-group" ng-class="{'has-error': errors.password2}">
-            <label>Repeat password:</label>
-            <input class="form-control" type="text" ng-model="input.password2" required>
-            <span class="help-block" ng-repeat="error in errors.password2">
-                {{ error }}
-            </span>
-        </div>
-
-        <button class="btn-primary" type="submit" ng-click="submit()">Sign in</button>
-    </form>
+<div class="modal-header">
+    <h4>Register</h4>
 </div>
+
+<form novalidate cs-form name="register">
+    <div class="modal-body">
+        <div class="form-group" cs-form-group>
+            <label for="username">Username</label>
+            <input ng-model="input.username" class="form-control" id="username" name="username" type="text">
+        </div>
+
+        <div class="form-group" cs-form-group>
+            <label for="email">E-mail</label>
+            <input ng-model="input.email" class="form-control" id="email" name="email" type="email">
+        </div>
+
+        <div class="form-group" cs-form-group>
+            <label for="password">Password</label>
+            <input ng-model="input.password" class="form-control" id="password" name="password" type="password">
+        </div>
+
+        <div class="form-group" cs-form-group>
+            <label for="password2">Repeat password</label>
+            <input ng-model="input.password2" class="form-control" id="password2" name="password2" type="password">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="submit()">Create account</button>
+        <a href class="btn btn-link" ng-click="$dismiss()">Cancel</a>
+    </div>
+</form>

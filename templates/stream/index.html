@@ -3,11 +3,21 @@
 {% block main %}
     <div class="row">
         <div class="col-md-12">
-            {% verbatim %}
-                <ul>
-                    <li ng-repeat="stream in streams">{{ stream | json }}</li>
-                </ul>
-            {% endverbatim %}
+            <ul id="stream-list">
+                {% verbatim %}
+                    <li ng-repeat="stream in streams">
+                        <a href="#" class="stream-title">{{ stream.title }}</a>
+                        <div class="stream-tile">
+                            <img src="" class="player-preview" width="200px" height="112px">
+                            <div class="stream-info">
+                                <span class="author">{{ stream.author.full_name }}</span>
+                                <span class="started">{{ stream.created }}</span>
+                                <span class="viewers">viewers: 10</span>
+                            </div>
+                        </div>
+                    </li>
+                {% endverbatim %}
+            </ul>
         </div>
     </div>
 {% endblock %}

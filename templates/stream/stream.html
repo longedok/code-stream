@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div id="player-row" class="row">
+    <div id="playerRow" class="row">
         <div class="col-md-9">
             <div class="player embed-responsive embed-responsive-16by9">
                 <object class="embed-responsive-item" type="application/x-shockwave-flash" id="live_embed_player_flash"
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div id="chat-col" class="col-md-3">
+        <div id="chatCol" class="col-md-3">
             <div id="chat" ng-controller="ChatCtrl">
                 <div class="message-area">
                     <div class="chat-message" ng-repeat="message in messages">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <textarea ng-model="input.text"></textarea>
-                <button class="btn-default" ng-enabled="send_enabled" ng-click="send()">Send</button>
+                <button class="btn-default" ng-disabled="sendingDisabled" ng-click="send()">Send</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <span class="modal-title">Start Stream</span>
+</div>
+
+<form>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="title">Stream title</label>
+            <input ng-model="input.title" class="form-control" id="title" name="title" type="text">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="submit()">Start</button>
+        <button class="btn btn-link" ng-click="$dismiss()">Cancel</button>
+    </div>
+</form>
