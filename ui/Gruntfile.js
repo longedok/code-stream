@@ -38,6 +38,8 @@ module.exports = function(grunt) {
                     'bower_components/angular-sanitize/angular-sanitize.js',
                     'bower_components/angular-resource/angular-resource.js',
                     'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+                    'bower_components/moment/moment.js',
+                    'bower_components/angular-moment/angular-moment.js'
                 ],
                 dest: 'public/vendors.js'
             },
@@ -45,6 +47,7 @@ module.exports = function(grunt) {
             app: {
                 src: [
                     'src/js/app.js',
+                    'src/js/**/*.js',
                     'public/templates.js'
                 ],
                 dest: 'public/app.js'
@@ -61,7 +64,8 @@ module.exports = function(grunt) {
 
         ngtemplates: {
             CodeStream: {
-                src: ['src/js/templates/**/*.html'],
+                cwd: 'src/js',
+                src: ['templates/**/*.html'],
                 dest: 'public/templates.js'
             }
         },

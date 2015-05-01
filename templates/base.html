@@ -8,17 +8,20 @@
     <title>Code Stream</title>
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
 </head>
-<body ng-controller="MainController as mainController">
+<body ng-controller="MainController">
     <header class="clearfix">
-        <h1 class="pull-left">Code Stream</h1>
+        <a href="/">
+            <h1 class="pull-left">Code Stream</h1>
+        </a>
+
         <div class="user-info pull-right">
             {% if user.is_authenticated %}
-                <a href="#">Account Settings</a>
-                <a href ng-click="mainController.startStream()">Start stream</a>
-                <a href ng-click="mainController.logout()">Log out</a>
+                <a href="{% url 'users-profile' %}">Account Settings</a>
+                <a href ng-click="startStream()">Start stream</a>
+                <a href ng-click="logout()">Log out</a>
             {% else %}
-                <a href ng-click="mainController.createAccount()">Create account</a>
-                <a href ng-click="mainController.login()">Log in</a>
+                <a href ng-click="createAccount()">Create account</a>
+                <a href ng-click="login()">Log in</a>
             {% endif %}
         </div>
     </header>

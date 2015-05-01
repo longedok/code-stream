@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="stream-list" ng-cloak>
+                {% verbatim %}
+                    <li ng-repeat="stream in streams">
+                        <div class="stream-tile">
+                            <a href="/streams/{{ stream.user.username }}/" class="stream-title">
+                                <span class="stream-title">{{ stream.title }}</span><br>
+                                <img ng-src="{{ stream.preview_url }}" class="player-preview"
+                                     width="200px" height="112px">
+                            </a>
+
+                            <div class="stream-info">
+                                <span class="author">{{ stream.author.full_name }}</span>
+                                <span class="started" am-time-ago="stream.started"></span>
+                                <span class="viewers">viewers: {{ stream.viewers }}</span>
+                            </div>
+                        </div>
+                    </li>
+                {% endverbatim %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

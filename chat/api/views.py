@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from ws4redis.publisher import RedisPublisher
 from ws4redis.redis_store import RedisMessage
 from pygments import highlight
-from pygments.lexers import PythonLexer, guess_lexer
+from pygments.lexers import PythonLexer
 from pygments.formatters import HtmlFormatter
 
-from chat.serializers import MessageSerializer
+from chat.api.serializers import MessageSerializer
 
 
 redis_publisher = RedisPublisher(facility='foobar', broadcast=True)
@@ -14,11 +14,9 @@ redis_publisher = RedisPublisher(facility='foobar', broadcast=True)
 
 @api_view(['POST'])
 def post(request):
-    srlzr = MessageSerializer(data=request.DATA)
-    if srlzr.is_valid():
-        parsed_message = srlzr.data
+    serializer = MessageSerializer(data=request.DATA)
+    if serializer.is_valid(raise_exception=True):
+        parsed_message = serializer.data
         highlighted_message = highlight(parsed_message['text'], PythonLexer(), HtmlFormatter(linenos=True))
         redis_publisher.publish_message(RedisMessage(highlighted_message))
         return Response(highlight(parsed_message['text'], PythonLexer(), HtmlFormatter()))
-    else:
-        return Response(srlzr.errors)

@@ -1,6 +1,7 @@
-from django.conf.urls import patterns, url
-from stream.views import StreamsView
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    url(r'^streams/$', StreamsView.as_view(), name='streams-list')
-)
+from . import views
+
+urlpatterns = [
+    url(r'^(?P<username>\w+)/$', views.ChannelView.as_view(), name='stream-channel')
+]

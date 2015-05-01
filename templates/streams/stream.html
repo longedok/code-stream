@@ -19,7 +19,7 @@
                     <param name="allowNetworking" value="all" />
                     <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
                     <param name="flashvars"
-                           value="hostname=www.twitch.tv&channel=longedok&auto_play=false&start_volume=100" />
+                           value="hostname=www.twitch.tv&channel={{ user.info.twitch_channel }}&auto_play=false&start_volume=100" />
                 </object>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <textarea ng-model="input.text"></textarea>
-                <button class="btn-default" ng-disabled="sendingDisabled" ng-click="send()">Send</button>
+                <button class="btn btn-default" ng-disabled="sendingDisabled" ng-click="send()">Send</button>
             </div>
         </div>
     </div>
