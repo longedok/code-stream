@@ -17,15 +17,15 @@ function($scope, $modal, $http, Stream) {
     $scope.login = function() {
         $modal.open({
             templateUrl: 'templates/forms/login.html',
-            controller: ['$scope', '$modalInstance', 'User', function($scope, $modalInstance, User) {
+            controller: [
+            '$scope', '$modalInstance', 'User', 'FormHelper',
+            function($scope, $modalInstance, User, FormHelper) {
+                var formHelper = FormHelper($scope);
+
                 $scope.input = {};
 
                 $scope.submit = function() {
-                    User.login($scope.input, function() {
-                        $modalInstance.close();
-                    }, function(response) {
-                        $scope.errors = response.data;
-                    });
+                    formHelper.submit($scope.input, User.login).then($modalInstance.close);
                 };
             }]
         }).result.then(function() {

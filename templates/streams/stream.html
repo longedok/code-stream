@@ -1,48 +1,39 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Broadcast title</h1>
-            <span>Broadcast description</span>
+<div class="inner-content">
+    <div id="stream-area">
+        <div>
+            <h1 class="stream-title">{{ stream.title }}</h1>
+        </div>
+
+        <div class="player" cs-player-height-resize>
+            <object type="application/x-shockwave-flash" id="live_embed_player_flash"
+                    data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{ user.info.twitch_channel }}"
+                    height="100%" width="100%">
+                <param name="allowFullScreen" value="true" />
+                <param name="allowScriptAccess" value="always" />
+                <param name="allowNetworking" value="all" />
+                <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+                <param name="flashvars"
+                       value="hostname=www.twitch.tv&channel={{ user.info.twitch_channel }}&auto_play=false&start_volume=100" />
+            </object>
         </div>
     </div>
 
-    <div id="playerRow" class="row">
-        <div class="col-md-9">
-            <div class="player embed-responsive embed-responsive-16by9">
-                <object class="embed-responsive-item" type="application/x-shockwave-flash" id="live_embed_player_flash"
-                        data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=longedok"
-                        bgcolor="#000000">
-                    <param name="allowFullScreen" value="true" />
-                    <param name="allowScriptAccess" value="always" />
-                    <param name="allowNetworking" value="all" />
-                    <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-                    <param name="flashvars"
-                           value="hostname=www.twitch.tv&channel={{ user.info.twitch_channel }}&auto_play=false&start_volume=100" />
-                </object>
-            </div>
-        </div>
-
-        <div id="chatCol" class="col-md-3">
-            <div id="chat" ng-controller="ChatCtrl">
-                <div class="message-area">
-                    <div class="chat-message" ng-repeat="message in messages">
-                        {% verbatim %}
-                        <span class="nickname">foo_user:</span> <div ng-bind-html="message"></div>
-                        {% endverbatim %}
-                    </div>
+    <div id="chat" ng-controller="ChatController">
+        <div class="chat-wrapper">
+            <div class="messages-area">
+                <div class="chat-message" ng-repeat="message in messages">
+                    {% verbatim %}
+                    {% endverbatim %}
                 </div>
+            </div>
+            <div class="input-area">
                 <textarea ng-model="input.text"></textarea>
                 <button class="btn btn-default" ng-disabled="sendingDisabled" ng-click="send()">Send</button>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Broadcast Info</h1>
-            <span>Maybe a comment section</span>
-        </div>
-    </div>
+</div>
 {% endblock %}

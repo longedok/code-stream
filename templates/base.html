@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
 </head>
 <body ng-controller="MainController">
-    <header class="clearfix">
+    <header>
         <a href="/">
             <h1 class="pull-left">Code Stream</h1>
         </a>
@@ -26,9 +26,10 @@
         </div>
     </header>
 
-    <section class="container-fluid">
+
+    <div class="content-row">
         {% block main %}{% endblock %}
-    </section>
+    </div>
 
     <script type="text/javascript" src="{% static 'js/ws4redis.js' %}"></script>
     <script type="text/javascript" src="{% static 'vendors.js' %}"></script>
