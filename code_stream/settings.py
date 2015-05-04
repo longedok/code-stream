@@ -64,10 +64,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'code_stream.urls'
 
-WSGI_APPLICATION = 'ws4redis.django_runserver.application'
-
-WEBSOCKET_URL = '/ws/'
-
 TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
     'ws4redis.context_processors.default',
     'social.apps.django_app.context_processors.backends',
@@ -128,4 +124,10 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-TWITCH_CLIENT_ID = 'lte1ik8vpybuvugm8k509q27jzblq6s'
+TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
+
+# WS4REDIS settings
+WSGI_APPLICATION = 'ws4redis.django_runserver.application'
+
+WEBSOCKET_URL = '/ws/'
+WS4REDIS_PREFIX = 'ws'
