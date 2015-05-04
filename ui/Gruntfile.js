@@ -24,8 +24,21 @@ module.exports = function(grunt) {
             },
 
             css: {
-                files: 'src/css/**/*.css',
-                tasks: ['concat:css']
+                files: 'src/sass/**/*.scss',
+                tasks: ['sass']
+            }
+        },
+
+        sass: {
+            options: {
+                includePaths: [
+                    'bower_components/fontawesome/scss',
+                    'bower_components/bootstrap-sass/assets/stylesheets'
+                ]
+            },
+            main: {
+                src: 'src/sass/main.scss',
+                dest: 'public/style.css'
             }
         },
 
@@ -33,7 +46,7 @@ module.exports = function(grunt) {
             vendors: {
                 src: [
                     'bower_components/jquery/dist/jquery.js',
-                    'bower_components/bootstrap/dist/js/bootstrap.js',
+                    'bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
                     'bower_components/angular/angular.js',
                     'bower_components/angular-sanitize/angular-sanitize.js',
                     'bower_components/angular-resource/angular-resource.js',
@@ -51,14 +64,6 @@ module.exports = function(grunt) {
                     'public/templates.js'
                 ],
                 dest: 'public/app.js'
-            },
-
-            css: {
-                src: [
-                    'bower_components/bootstrap/dist/css/bootstrap.css',
-                    'src/css/*.css'
-                ],
-                dest: 'public/style.css'
             }
         },
 
@@ -80,9 +85,17 @@ module.exports = function(grunt) {
         },
 
         symlink: {
-            bootstrap: {
-                src: 'bower_components/bootstrap/dist/css/bootstrap.css.map',
-                dest: 'public/bootstrap.css.map'
+            main: {
+                src: 'src/fonts',
+                dest: 'public/fonts/main'
+            },
+            fa: {
+                src: 'bower_components/fontawesome/fonts',
+                dest: 'public/fonts/fontawesome'
+            },
+            glyphicons: {
+                src: 'bower_components/bootstrap-sass/assets/fonts/bootstrap',
+                dest: 'public/fonts/bootstrap'
             }
         }
     });
@@ -91,8 +104,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-symlink');
+    grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-angular-templates');
 
-    grunt.registerTask('development', ['ngtemplates', 'concat', 'symlink', 'watch']);
-    grunt.registerTask('production', ['ngtemplates', 'concat', 'symlink', 'uglify']);
+    grunt.registerTask('development', ['ngtemplates', 'sass', 'concat', 'symlink', 'watch']);
+    grunt.registerTask('production', ['ngtemplates', 'sass', 'concat', 'symlink', 'uglify']);
 };

@@ -1,0 +1,147 @@
+$header-height: 60px;
+$chat-width: 400px;
+$stream-entry-width: 350px;
+
+$color-font-lightgray: #7B8084;
+$color-font-darkergray: #515151;
+
+/* LAYOUT */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: $header-height;
+    background: white;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid rgb(157, 140, 140);
+    @include box-shadow(0 -1px 7px 1px #CDCDCD);
+    z-index: 100;
+}
+
+.content-row {
+    margin-top: $header-height;
+}
+
+.inner-content {
+    padding: 30px 40px;
+}
+
+/* TYPOGRAPHY */
+h1, h2, h4 {
+    margin: 0;
+}
+
+body {
+  font-family: "DROID SANS", sans-serif;
+}
+
+header h1 {
+    color: $color-font-lightgray;
+}
+
+h2 {
+    color: $color-font-darkergray;
+}
+
+h4 {
+    font-size: 13pt;
+}
+
+/* MAIN PAGE */
+.user-info {
+    margin: 10px 0 0 0;
+
+    > a {
+        border-left: 1px rgb(142, 137, 137) solid;
+        padding: 0 8px 0 8px;
+        font-size: 12pt;
+
+        &:first-child {
+            border-left: none;
+        }
+    }
+}
+
+#stream-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .stream-entry {
+        display: inline-block;
+        width: $stream-entry-width;
+        margin-right: $stream-entry-width / 10;
+        color: $color-font-lightgray;
+
+        .username-row {
+            margin-bottom: 5px;
+        }
+
+        .player-preview {
+            width: $stream-entry-width;
+            height: $stream-entry-width / 1.7857;
+        }
+
+        .stream-info-row {
+            margin-top: 5px;
+        }
+    }
+}
+
+/* STREAM PAGE */
+.stream-title {
+    margin-bottom: 10px;
+}
+
+#stream-area {
+    margin-right: $chat-width;
+}
+
+#chat {
+    position: fixed;
+    top: $header-height;
+    right: 0;
+    bottom: 0;
+    width: $chat-width;
+
+    background: rgb(235, 235, 239);
+    border-left: 1px solid rgb(157, 140, 140);
+
+    .chat-wrapper {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: 5px 5px 95px 5px;
+        width: 390px;
+    }
+
+    .messages-area {
+        height: 100%;
+        padding: 5px;
+        background: white;
+    }
+
+    .input-area {
+        position: fixed;
+        bottom: 5px;
+        width: 390px;
+        vertical-align: bottom;
+
+        textarea {
+            width: 100%;
+            margin-top: 5px;
+        }
+    }
+}
+
+/* MODALS */
+.modal-header {
+    .modal-title {
+        font-size: 1.5em;
+    }
+}
+
+.modal-footer {
+    text-align: left;
+}

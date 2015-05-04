@@ -12,7 +12,7 @@ function($scope, $http) {
     };
 
     WS4Redis({
-        uri: 'ws://127.0.0.1:8000/ws/foobar?subscribe-broadcast&publish-broadcast&echo',
+        uri: 'http://127.0.0.1:8000/ws/chat?subscribe-broadcast&publish-broadcast&echo',
         receive_message: onMessage,
         heartbeat_msg: '-- hearbeat --'
     });

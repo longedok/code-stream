@@ -3,6 +3,7 @@ ui/bower_components
 ui/node_modules
 ui/npm-debug.log
 .idea
+.sass-cache/
 
 *.sqlite3
 **/*.pyc

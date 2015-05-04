@@ -1,29 +1,26 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<div class="inner-content">
+<div class="inner-content" ng-controller="IndexController">
     <ul id="stream-list" ng-cloak>
         {% verbatim %}
-            <li ng-repeat="stream in streams">
-                <div>
-                    <a href="/streams/{{ stream.user.username }}/">
-                        <span>{{ stream.title }}</span>
-                    </a>
-                    <br>
-                    <span>{{ stream.user.username }}</span>
-                    <a href="/streams/{{ stream.user.username }}/">
-                        <img ng-src="{{ stream.preview_url }}" class="player-preview">
-                    </a>
+            <li ng-repeat="stream in streams" class="stream-entry">
+                <h4>
+                    <a href="/streams/{{ stream.user.username }}/">{{ stream.title }}</a>
+                </h4>
+                <div class="username-row">
+                    <span><i class="fa fa-user"></i> {{ stream.user.username }}</span>
+                </div>
+                <a href="/streams/{{ stream.user.username }}/">
+                    <img ng-src="{{ stream.preview_url }}" class="player-preview">
+                </a>
 
-
-                    <div class="stream-info clearfix">
-                        <span class="author">{{ stream.author.full_name }}</span>
-                        <span class="started pull-left" am-time-ago="stream.started" title="{{ stream.started }}">
-                        </span>
-                        <span class="viewers pull-right">
-                            viewers: {{ stream.viewers }}
-                        </span>
-                    </div>
+                <div class="stream-info-row clearfix">
+                    <span class="started pull-left" am-time-ago="stream.started" title="{{ stream.started }}">
+                    </span>
+                    <span class="viewers pull-right">
+                        <i class="fa fa-eye"></i> {{ stream.viewers }}
+                    </span>
                 </div>
             </li>
         {% endverbatim %}

@@ -9,7 +9,7 @@ from pygments.formatters import HtmlFormatter
 from chat.api.serializers import MessageSerializer
 
 
-redis_publisher = RedisPublisher(facility='foobar', broadcast=True)
+redis_publisher = RedisPublisher(facility='chat', broadcast=True)
 
 
 @api_view(['POST'])
