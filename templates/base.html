@@ -1,41 +1,21 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en" ng-app="CodeStream">
+<html lang="en" ng-app="CodeStream" ng-strict-di>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Code Stream</title>
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
 </head>
-<body ng-controller="MainController">
-    <header>
-        <a href="/">
-            <h1 class="pull-left">
-                <i class="fa fa-laptop"></i>
-                Code Stream
-            </h1>
-        </a>
+<body>
+    <ui-view></ui-view>
 
-        <div class="user-info pull-right">
-            {% if user.is_authenticated %}
-                <a href="{% url 'users-profile' %}">Account Settings</a>
-                <a href ng-click="startStream()">Start stream</a>
-                <a href ng-click="logout()">Log out</a>
-            {% else %}
-                <a href ng-click="createAccount()">Create account</a>
-                <a href ng-click="login()">Log in</a>
-            {% endif %}
-        </div>
-    </header>
-
-
-    <div class="content-row">
-        {% block main %}{% endblock %}
-    </div>
-
-    <script type="text/javascript" src="{% static 'js/ws4redis.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendors.js' %}"></script>
-    <script type="text/javascript" src="{% static 'app.js' %}"></script>
+    <script src="{% static 'js/ws4redis.js' %}"></script>
+    <script src="{% static 'vendors.js' %}"></script>
+    <script src="{% static 'app.js' %}"></script>
+    <script>
+        {{ backend_data_service_code|safe }}
+    </script>
 </body>
 </html>

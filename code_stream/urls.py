@@ -5,9 +5,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='codestream-index'),
-    url(r'^streams/', include('stream.urls')),
-    url(r'^users/', include('users.urls')),
+    url(r'^$', views.MainView.as_view()),
 
     url(r'^api/', include([
         url(r'^streams/', include('stream.api.urls')),

@@ -1,0 +1,24 @@
+<header>
+    <a ui-sref="main.index">
+        <h1 class="pull-left">
+            <i class="fa fa-laptop"></i>
+            Code Stream
+        </h1>
+    </a>
+
+    <div ng-show="currentUser.is_authenticated" class="user-info pull-right">
+        <a href="{% url 'users-profile' %}">Account Settings</a>
+        <a href ng-click="startStream()">Start stream</a>
+        <a href ng-click="logout()">Log out</a>
+    </div>
+
+    <div ng-hide="currentUser.is_authenticated" class="user-info pull-right">
+        <a href ng-click="createAccount()">Create account</a>
+        <a href ng-click="login()">Log in</a>
+    </div>
+</header>
+
+
+<div class="content-row">
+    <ui-view></ui-view>
+</div>

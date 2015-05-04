@@ -42,7 +42,7 @@ app.directive('csFormGroup', function() {
     return {
         require: '^form',
         link: function(scope, element, attributes, formController) {
-            var inputName = $(element).find('input').attr('name');
+            var inputName = $(element).find("[name]").attr('name');
 
             scope.$watch(function() {
                 return formController[inputName].$pristine;

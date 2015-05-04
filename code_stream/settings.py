@@ -131,3 +131,19 @@ WSGI_APPLICATION = 'ws4redis.django_runserver.application'
 
 WEBSOCKET_URL = '/ws/'
 WS4REDIS_PREFIX = 'ws'
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}

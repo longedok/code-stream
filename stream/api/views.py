@@ -20,4 +20,7 @@ class StreamsView(APIView):
             return Response(StreamSerializer(stream).data, status=status.HTTP_200_OK)
 
     def get(self, request):
-        return Response(ActiveStreamSerializer(ActiveStream.objects.all(), many=True).data, status=status.HTTP_200_OK)
+        streams_json = ActiveStreamSerializer(ActiveStream.objects.select_related('stream__owner__info'),
+                                              many=True).data
+
+        return Response(streams_json, status=status.HTTP_200_OK)
