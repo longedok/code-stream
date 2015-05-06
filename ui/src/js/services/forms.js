@@ -4,10 +4,10 @@ app.factory('FormHelper', ['$q', function($q) {
             return $q(function(resolve, reject) {
                 action.apply(null, [model]).$promise.then(function(response) {
                     scope.$broadcast('forms.success', response.data);
-                    resolve(response.data);
+                    resolve(response);
                 }, function(response) {
                     scope.$broadcast('forms.errors', response.data);
-                    reject(response.data);
+                    reject(response);
                 });
             });
         };

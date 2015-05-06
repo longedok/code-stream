@@ -10,3 +10,7 @@ app.factory('User', ['$resource', function($resource) {
         }
     });
 }]);
+
+app.service('UserService', function() {
+    this.currentUser = undefined;
+});

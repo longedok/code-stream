@@ -6,19 +6,22 @@
     <div class="modal-body">
         <cs-non-field-errors></cs-non-field-errors>
 
+        {{ input }}
+
         <div class="form-group" cs-form-group>
             <label for="title">Stream title</label>
-            <input ng-model="input.title" class="form-control" id="title" name="title" type="text">
+            <input ng-model="input.title" class="form-control" id="title" name="title" type="text" tabindex="0">
         </div>
 
         <div class="form-group" cs-form-group>
             <label for="title">Series</label>
-            <ui-select ng-model="input.series" name="series">
+            <ui-select ng-model="input.series" name="series" tagging="createNewSeries" tagging-tokens="ENTER"
+                       cs-prevent-submit>
                 <ui-select-match placeholder="No Series" allow-clear="true">
                     {{ $select.selected.title }}
                 </ui-select-match>
 
-                <ui-select-choices repeat="seriesEntity in series">
+                <ui-select-choices repeat="seriesEntity.id as seriesEntity in user.series">
                     <div ng-bind-html="seriesEntity.title | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>
@@ -27,16 +30,14 @@
         <div class="form-group" cs-form-group>
             <label for="title">Technologies</label>
             <ui-select ng-model="input.technologies" name="technologies">
-                <ui-select-match placeholder="Choose technologies you'll use in the stream...">
+                <ui-select-match placeholder="Choose the technologies you'll use in the stream...">
                     {{ $select.selected.title }}
                 </ui-select-match>
 
-                <ui-select-choices repeat="technology in technologies track by $index"
-                                   refresh="refreshTechnologies($select.search)" refresh-delay="0">
+                <ui-select-choices repeat="technology.id as technology in technologies">
                     <div ng-bind-html="technology.title | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>
-            <p class="help-block">Create new technology by typing its title and pressing Enter</p>
         </div>
     </div>
 

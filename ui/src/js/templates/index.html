@@ -2,12 +2,12 @@
     <ul id="stream-list">
         <li ng-repeat="stream in streams" class="stream-entry" ng-cloak>
             <h4>
-                <a ui-sref="main.stream({username: stream.user.username})">{{ stream.title }}</a>
+                <a ui-sref="main.stream({username: stream.user.username, stream: stream})">{{ stream.title }}</a>
             </h4>
             <div class="username-row">
                 <span><i class="fa fa-user"></i> {{ stream.user.username }}</span>
             </div>
-            <a href="/streams/{{ stream.user.username }}/">
+            <a ui-sref="main.stream({username: stream.user.username, stream: stream})">
                 <img ng-src="{{ stream.preview_url }}" class="player-preview">
             </a>
 

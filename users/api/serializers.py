@@ -47,12 +47,14 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInfo
-        fields = ('github_profile',)
+        fields = ('github_profile', 'twitch_channel')
 
 
 class UserSerializer(serializers.ModelSerializer):
+    from stream.api.serializers import SeriesSerializer
     info = UserInfoSerializer()
+    series = SeriesSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'info')
+        fields = ('id', 'username', 'email', 'info', 'series')

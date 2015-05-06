@@ -1,6 +1,7 @@
 <div class="inner-content">
     <div id="stream-area">
-        <h2 class="stream-title">{{ stream.title }}</h2>
+        <h2 class="stream-title" ng-hide="stream.offline">{{ stream.title }}</h2>
+        <span ng-show="stream.offline">This stream is currently offline</span>
 
         <div class="player" cs-player-height-resize>
             <object type="application/x-shockwave-flash" id="live_embed_player_flash"
@@ -11,20 +12,20 @@
                 <param name="allowNetworking" value="all" />
                 <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
                 <param name="flashvars"
-                       value="hostname=www.twitch.tv&channel={{ user.info.twitch_channel }}&auto_play=false&start_volume=100" />
+                       value="hostname=www.twitch.tv&channel={{ stream.user.info.twitch_channel }}&auto_play=false&start_volume=100" />
             </object>
         </div>
     </div>
 
-    <div id="chat" ng-controller="ChatController">
+    <div id="chat">
         <div class="chat-wrapper">
             <div class="messages-area">
-                <div class="chat-message" ng-repeat="message in messages">
+                <div class="chat-message" ng-repeat="message in chatMessages">
                 </div>
             </div>
             <div class="input-area">
-                <textarea ng-model="input.text"></textarea>
-                <button class="btn btn-default" ng-click="send()">Send</button>
+                <textarea ng-model="chatMessage.text"></textarea>
+                <button class="btn btn-default" ng-click="sendChatMessage()">Send</button>
             </div>
         </div>
     </div>

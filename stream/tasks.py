@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+import json
 import requests
 from django.conf import settings
 from celery import shared_task
@@ -31,4 +31,6 @@ def start_stream(stream_id, user_id, channel_name):
         active_stream.preview_url = stream_info['stream']['preview']['medium']
         active_stream.save()
 
-        redis_publisher.publish_message(RedisMessage('streams.started'))
+        ws_message = json.dumps({'action': 'stream.started', 'user': user_id})
+
+        redis_publisher.publish_message(ws_message)

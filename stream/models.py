@@ -7,6 +7,7 @@ import model_utils.models as util_models
 
 class Series(util_models.TimeStampedModel):
     title = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
 
     owner = models.ForeignKey(User, related_name='series')
 
@@ -26,7 +27,7 @@ class ActiveStream(models.Model):
     preview_url = models.URLField()
 
 
-class Techonology(util_models.TimeStampedModel):
+class Technology(util_models.TimeStampedModel):
     title = models.CharField(max_length=100)
     description = models.TextField()
 

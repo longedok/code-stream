@@ -9,3 +9,16 @@ app.directive('csPlayerHeightResize', function() {
         }
     }
 });
+
+app.directive('csPreventSubmit', function() {
+    return {
+        link: function(scope, elm) {
+            $(elm).find("input[type='text']").keypress(function(e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            });
+        }
+    }
+});

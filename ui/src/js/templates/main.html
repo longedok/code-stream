@@ -7,14 +7,14 @@
     </a>
 
     <div ng-show="currentUser.is_authenticated" class="user-info pull-right">
-        <a href="{% url 'users-profile' %}">Account Settings</a>
+        <a ui-sref="main.userProfile"><i class='fa fa-user'></i> {{ currentUser.username }}</a>
         <a href ng-click="startStream()">Start stream</a>
         <a href ng-click="logout()">Log out</a>
     </div>
 
     <div ng-hide="currentUser.is_authenticated" class="user-info pull-right">
-        <a href ng-click="createAccount()">Create account</a>
         <a href ng-click="login()">Log in</a>
+        <a href ng-click="createAccount()">Create account</a>
     </div>
 </header>
 

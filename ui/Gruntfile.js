@@ -61,6 +61,7 @@ module.exports = function(grunt) {
 
             app: {
                 src: [
+                    'src/js/utils.js',
                     'src/js/app.js',
                     'src/js/**/*.js',
                     'public/templates.js'

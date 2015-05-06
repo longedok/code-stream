@@ -29,8 +29,33 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 templateUrl: 'templates/index.html'
             })
             .state('main.stream', {
-                url: 'stream/:username',
+                url: 'streams/:username',
                 controller: 'StreamController',
-                templateUrl: 'templates/stream.html'
+                templateUrl: 'templates/stream.html',
+                resolve: {
+                    stream: ['$q', '$stateParams', 'Stream', function($q, $stateParams, Stream) {
+                        var stream = $stateParams.stream;
+
+                        if (!('id' in stream)) {
+                            return $q(function(resolve) {
+                                Stream.getActive({username: $stateParams.username}).$promise.then(function(stream) {
+                                    resolve(stream);
+                                }, function() {
+                                    resolve({offline: true});
+                                });
+                            });
+                        } else {
+                            return stream;
+                        }
+                    }]
+                },
+                params: {
+                    stream: {}
+                }
+            })
+            .state('main.userProfile', {
+                url: 'profile/',
+                controller: 'ProfileController',
+                templateUrl: 'templates/profile.html'
             })
 }]);

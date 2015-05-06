@@ -1,9 +1,10 @@
 import json
+from django.contrib.auth.models import User
 
 from django.views.generic import TemplateView
 from rest_framework.renderers import JSONRenderer
-from stream.api.serializers import ActiveStreamSerializer
-from stream.models import ActiveStream
+from stream.api.serializers import ActiveStreamSerializer, TechnologySerializer
+from stream.models import ActiveStream, Technology
 from users.api.serializers import UserSerializer
 
 
@@ -38,12 +39,17 @@ class MainView(TemplateView):
         else:
             user_repr = json.dumps({'is_authenticated': False})
 
+        # TODO: reduce the number of SQL queries to `stream_series` table
         streams_serialized = ActiveStreamSerializer(ActiveStream.objects.select_related('stream__owner__info'),
                                                     many=True).data
         streams_repr = JSONRenderer().render(streams_serialized)
 
+        technologies_serialized = TechnologySerializer(Technology.objects.all(), many=True).data
+        technologies_repr = JSONRenderer().render(technologies_serialized)
+
         code_builder.add_property('user', user_repr)
         code_builder.add_property('streams', streams_repr)
+        code_builder.add_property('technologies', technologies_repr)
 
         context['backend_data_service_code'] = code_builder.get_result()
 
