@@ -3,6 +3,7 @@ app.controller('MainController', [
 function($scope, $modal, $http, BackendData, UserService) {
     $scope.currentUser = UserService.currentUser = BackendData.user;
     $scope.streams = BackendData.streams;
+    $scope.technologies = BackendData.technologies;
 
     function onStreamsUpdated() {
         Stream.query(function(streams) {
@@ -10,8 +11,8 @@ function($scope, $modal, $http, BackendData, UserService) {
         });
     }
 
-    var ws4redis = WS4Redis({
-        uri: 'ws://127.0.0.1:8000/ws/streams?subscribe-broadcast&publish-broadcast&echo',
+    var ws4redis = new WS4Redis({
+        uri: 'ws://127.0.0.1:8000/ws/streams?subscribe-broadcast&echo',
         receive_message: onStreamsUpdated,
         heartbeat_msg: '-- hearbeat --'
     });
@@ -41,7 +42,7 @@ function($scope, $modal, $http, BackendData, UserService) {
 
                 $scope.submit = function() {
                     formHelper.submit($scope.input, User.login).then(function(authenticatedUser) {
-                        $modalInstance.close(authenticatedUser);
+                        $modalInstance.close(authenticatedUser.data);
                     });
                 };
             }]

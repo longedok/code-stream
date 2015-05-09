@@ -3,8 +3,6 @@ function WS4Redis(options, $) {
 	var opts, ws, deferred, timer, attempts = 1;
 	var heartbeat_interval = null, missed_heartbeats = 0;
 
-	if (this === undefined)
-		return new WS4Redis(options, $);
 	if (options.uri === undefined)
 		throw new Error('No Websocket URI in options');
 	if ($ === undefined)

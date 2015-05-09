@@ -1,16 +1,11 @@
 from rest_framework import serializers
 
-from stream.models import Stream, ActiveStream, Technology, Series
+from stream.models import Stream, ActiveStream, Technology, Series, Material
 
 
 class StreamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stream
-
-
-class TechnologySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Technology
 
 
 class SeriesSerializer(serializers.ModelSerializer):
@@ -28,3 +23,19 @@ class ActiveStreamSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActiveStream
         fields = ('id', 'user', 'title', 'viewers', 'started', 'preview_url')
+
+
+class MaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Material
+        fields = ('id', 'created', 'modified', 'title', 'url', 'description', 'technology')
+        read_only_fields = ('creator', 'created', 'modified')
+
+
+class TechnologySerializer(serializers.ModelSerializer):
+    materials = MaterialSerializer(many=True)
+
+    class Meta:
+        model = Technology
+        fields = ('id', 'title', 'description', 'creator', 'created', 'modified', 'materials')
+        read_only_fields = ('creator', 'created', 'modified', 'materials')

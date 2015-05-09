@@ -1,0 +1,22 @@
+<div class="inner-content">
+    <h1>Technologies</h1>
+    <button class="btn btn-primary" ng-click="add()">
+        <i class="fa fa-plus"></i> Add
+    </button>
+    <div class="technology" ng-repeat="technology in technologies">
+        <h2>{{ technology.title }}</h2>
+        <div class="technology-description">
+            {{ technology.description }}
+        </div>
+        <ul class="technology-materials" ng-show="technology.materials.length > 0">
+            <li class="material-block" ng-repeat="material in technology.materials">
+                <span class="material-title">{{ material.title }}</span><br>
+                <span class="material-url">{{ material.url }}</span>
+                <div class="material-description">{{ material.description }}</div>
+            </li>
+        </ul>
+        <button class="btn btn-default" ng-click="addMaterial(technology)">
+            <i class="fa fa-plus"></i> Add Material
+        </button>
+    </div>
+</div>

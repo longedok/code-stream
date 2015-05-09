@@ -4,8 +4,9 @@ from rest_framework.decorators import list_route
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from stream.api.serializers import StreamSerializer, ActiveStreamSerializer, TechnologySerializer, SeriesSerializer
-from stream.models import ActiveStream, Technology, Series
+from stream.api.serializers import StreamSerializer, ActiveStreamSerializer, TechnologySerializer, SeriesSerializer, \
+    MaterialSerializer
+from stream.models import ActiveStream, Technology, Series, Material
 from stream.tasks import start_stream
 
 
@@ -38,14 +39,25 @@ class StreamsViewset(CreateModelMixin, ListModelMixin, GenericViewSet):
         return Response(ActiveStreamSerializer(stream).data, status=status.HTTP_200_OK)
 
 
-class TechnologyViewSet(ModelViewSet):
-    queryset = Technology.objects.all()
-    serializer_class = TechnologySerializer
-
-
 class SeriesViewSet(ModelViewSet):
     queryset = Series.objects.all()
     serializer_class = SeriesSerializer
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class TechnologyViewSet(ModelViewSet):
+    queryset = Technology.objects.all()
+    serializer_class = TechnologySerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
+
+class MaterialViewSet(ModelViewSet):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)

@@ -9,10 +9,14 @@ app.factory('Stream', ['$resource', function($resource) {
     });
 }]);
 
+app.factory('Series', ['$resource', function($resource) {
+    return $resource('/api/streams/series/:id/:action/', {id: '@id'});
+}]);
+
 app.factory('Technology', ['$resource', function($resource) {
     return $resource('/api/streams/technologies/:id/:action/', {id: '@id'});
 }]);
 
-app.factory('Series', ['$resource', function($resource) {
-    return $resource('/api/streams/series/:id/:action/', {id: '@id'});
+app.factory('Material', ['$resource', function($resource) {
+    return $resource('/api/streams/materials/:id/:action/', {id: '@id'});
 }]);

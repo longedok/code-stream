@@ -33,3 +33,12 @@ class Technology(util_models.TimeStampedModel):
 
     creator = models.ForeignKey(User)
     streams = models.ManyToManyField(Stream, related_name='technologies')
+
+
+class Material(util_models.TimeStampedModel):
+    title = models.CharField(max_length=100)
+    url = models.URLField()
+    description = models.TextField()
+
+    creator = models.ForeignKey(User)
+    technology = models.ForeignKey(Technology, related_name='materials')

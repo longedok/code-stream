@@ -58,4 +58,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 controller: 'ProfileController',
                 templateUrl: 'templates/profile.html'
             })
+            .state('main.technologies', {
+                url: 'technologies/',
+                controller: 'TechnologiesController',
+                templateUrl: 'templates/technologies.html'
+            })
 }]);

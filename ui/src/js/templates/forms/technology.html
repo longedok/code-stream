@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <span class="modal-title">Technology</span>
+</div>
+
+<form cs-form>
+    <div class="modal-body">
+        <cs-non-field-errors></cs-non-field-errors>
+
+        <div class="form-group" cs-form-group>
+            <label for="title">Technology title</label>
+            <input ng-model="input.title" class="form-control" id="title" name="title" type="text" tabindex="0">
+        </div>
+
+        <div class="form-group" cs-form-group>
+            <label for="description">Description</label>
+            <textarea ng-model="input.description" class="form-control" id="description" name="description">
+            </textarea>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="submit()">Create</button>
+        <a class="btn btn-link" ng-click="$dismiss()">Cancel</a>
+    </div>
+</form>

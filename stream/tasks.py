@@ -8,9 +8,6 @@ from stream.models import ActiveStream
 from users.models import UserInfo
 
 
-redis_publisher = RedisPublisher(facility='streams', broadcast=True)
-
-
 @shared_task
 def start_stream(stream_id, user_id, channel_name):
     endpoint_url = 'https://api.twitch.tv/kraken/streams/%s/' % channel_name
@@ -33,4 +30,4 @@ def start_stream(stream_id, user_id, channel_name):
 
         ws_message = json.dumps({'action': 'stream.started', 'user': user_id})
 
-        redis_publisher.publish_message(ws_message)
+        RedisPublisher(facility='streams', broadcast=True).publish_message(ws_message)

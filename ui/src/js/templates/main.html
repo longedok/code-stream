@@ -1,10 +1,10 @@
 <header>
-    <a ui-sref="main.index">
-        <h1 class="pull-left">
+    <h1 class="pull-left">
+        <a ui-sref="main.index">
             <i class="fa fa-laptop"></i>
             Code Stream
-        </h1>
-    </a>
+        </a>
+    </h1>
 
     <div ng-show="currentUser.is_authenticated" class="user-info pull-right">
         <a ui-sref="main.userProfile"><i class='fa fa-user'></i> {{ currentUser.username }}</a>

@@ -10,7 +10,7 @@ from users.api.serializers import UserSerializer
 
 class AngularServiceBuilder(object):
     data_service_start = "app.service('%(service_name)s', function() {\n"
-    property_definition = "\tthis.%(name)s = JSON.parse('%(value)s');\n"
+    property_definition = "\tthis.%(name)s = %(value)s;\n"
     data_service_end = "});\n"
 
     def __init__(self, service_name):

@@ -36,8 +36,13 @@ body {
   font-family: "DROID SANS", sans-serif;
 }
 
-header h1 {
+header h1 a {
     color: $color-font-lightgray;
+
+    &:hover, &:focus {
+        text-decoration: none;
+        color: $color-font-lightgray;
+    }
 }
 
 h2 {
@@ -122,6 +127,7 @@ h4 {
         height: 100%;
         padding: 5px;
         background: white;
+        overflow-y: auto;
     }
 
     .input-area {
@@ -133,6 +139,31 @@ h4 {
         textarea {
             width: 100%;
             margin-top: 5px;
+        }
+    }
+}
+
+/* TECHNOLOGIES PAGE */
+.technology {
+    border-left: 2px solid rgb(195, 195, 195);
+    padding-left: 15px;
+    margin-top: 25px;
+
+    .technology-materials {
+        margin: 15px 0;
+        padding: 0;
+        list-style: none;
+
+        .material-block {
+            display: inline-block;
+            max-width: 270px;
+            vertical-align: top;
+            margin-right: 18px;
+
+            .material-title {
+                font-size: 12pt;
+                font-weight: bold;
+            }
         }
     }
 }

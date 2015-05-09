@@ -1,6 +1,4 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseRedirect
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -40,11 +38,3 @@ class LogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response(status=200)
-
-
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            return HttpResponseRedirect('/')

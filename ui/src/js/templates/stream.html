@@ -6,7 +6,7 @@
         <div class="player" cs-player-height-resize>
             <object type="application/x-shockwave-flash" id="live_embed_player_flash"
                     data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{ stream.user.info.twitch_channel }}"
-                    height="100%" width="100%">
+                    height="100%" width="100%" wmode='opaque'>
                 <param name="allowFullScreen" value="true" />
                 <param name="allowScriptAccess" value="always" />
                 <param name="allowNetworking" value="all" />
@@ -20,12 +20,14 @@
     <div id="chat">
         <div class="chat-wrapper">
             <div class="messages-area">
-                <div class="chat-message" ng-repeat="message in chatMessages">
+                <div class="chat-message" ng-repeat="message in chatMessages track by $index">
+                    <strong>{{ message.user }}</strong>: <span ng-bind-html="message.text"></span>
                 </div>
             </div>
             <div class="input-area">
-                <textarea ng-model="chatMessage.text"></textarea>
+                <textarea ng-model="input.text"></textarea>
                 <button class="btn btn-default" ng-click="sendChatMessage()">Send</button>
+                <label><input type="checkbox" ng-model="input.code"> Code</label>
             </div>
         </div>
     </div>
