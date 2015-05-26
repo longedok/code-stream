@@ -1,13 +1,24 @@
+import json
 from django.http import Http404
 from rest_framework import permissions, status
 from rest_framework.decorators import list_route
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from stream.api.serializers import StreamSerializer, ActiveStreamSerializer, TechnologySerializer, SeriesSerializer, \
-    MaterialSerializer
-from stream.models import ActiveStream, Technology, Series, Material
+from rest_framework.pagination import CursorPagination
+from ws4redis.publisher import RedisPublisher
+from ws4redis.redis_store import RedisMessage
+from code_stream.pagination import CustomCursorPagination
+from stream.api.serializers import (StreamSerializer, ActiveStreamSerializer, TechnologySerializer, SeriesSerializer,
+                                    MaterialSerializer, EventSerializer)
+from stream.models import ActiveStream, Technology, Series, Material, Event
 from stream.tasks import start_stream
+
+
+def publish_event():
+    message = json.dumps({'action': 'events-updated'})
+
+    RedisPublisher(facility='main', broadcast=True).publish_message(RedisMessage(message))
 
 
 class StreamsViewset(CreateModelMixin, ListModelMixin, GenericViewSet):
@@ -24,6 +35,9 @@ class StreamsViewset(CreateModelMixin, ListModelMixin, GenericViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         stream = serializer.save(owner=user)
+
+        Event.objects.create(user=user, type=Event.STREAM_STARTED, description='streaming.')
+        publish_event()
 
         start_stream.delay(stream.pk, user.pk, user.info.twitch_channel)
 
@@ -52,7 +66,11 @@ class TechnologyViewSet(ModelViewSet):
     serializer_class = TechnologySerializer
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        technology = serializer.save(creator=self.request.user)
+
+        Event.objects.create(user=self.request.user, type=Event.TECHNOLOGY_ADDED,
+                             description='new technology "%s".' % technology.title)
+        publish_event()
 
 
 class MaterialViewSet(ModelViewSet):
@@ -60,4 +78,16 @@ class MaterialViewSet(ModelViewSet):
     serializer_class = MaterialSerializer
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        material = serializer.save(creator=self.request.user)
+
+        Event.objects.create(user=self.request.user, type=Event.MATERIAL_ADDED,
+                             description='new technology material "%s".' % material.title)
+        publish_event()
+
+
+class EventsView(ListModelMixin, GenericViewSet):
+    queryset = Event.objects.all().order_by('-created')
+    serializer_class = EventSerializer
+
+    pagination_class = CustomCursorPagination
+    page_size = 10

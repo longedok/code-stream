@@ -10,6 +10,7 @@ class UserInfo(models.Model):
     is_streaming = models.BooleanField(default=False)
 
     github_profile = models.URLField(null=True, blank=True)
+    stackoverflow_profile = models.URLField(null=True, blank=True)
     twitch_channel = models.CharField(max_length=255)
 
 

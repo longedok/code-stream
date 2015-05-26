@@ -10,6 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from datetime import timedelta
+from django.conf import settings
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -45,6 +48,7 @@ INSTALLED_APPS = (
 
     'ws4redis',
     'social.apps.django_app.default',
+    'rest_framework',
 
     'stream',
     'chat',
@@ -100,7 +104,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (
+TEMPLATE_DIRS = settings.TEMPLATE_DIRS + (
     os.path.join(BASE_DIR, 'templates'),
 )
 
@@ -124,26 +128,51 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+CELERYBEAT_SCHEDULE = {
+    'update-streams': {
+        'task': 'stream.tasks.update_streams',
+        'schedule': timedelta(minutes=1)
+    },
+}
+
+CELERY_TIMEZONE = 'UTC'
+
 TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
+PASTEBIN_ID = os.environ['PASTEBIN_ID']
 
 # WS4REDIS settings
 WSGI_APPLICATION = 'ws4redis.django_runserver.application'
 
 WEBSOCKET_URL = '/ws/'
 WS4REDIS_PREFIX = 'ws'
+#WS4REDIS_HEARTBEAT = '-- heartbeat --'
+WS4REDIS_EXPIRE = 0
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 10
+}
 
 # Logging
-LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        }
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'simple': {
+#             'format': '[%(asctime)s %(module)s] %(levelname)s: %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }

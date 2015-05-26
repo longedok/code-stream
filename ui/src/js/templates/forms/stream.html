@@ -27,15 +27,20 @@
 
         <div class="form-group" cs-form-group>
             <label for="title">Technologies</label>
-            <ui-select ng-model="input.technologies" name="technologies">
+            <ui-select multiple ng-model="input.technologies" name="technologies">
                 <ui-select-match placeholder="Choose the technologies you'll use in the stream...">
-                    {{ $select.selected.title }}
+                    {{ $item.title }}
                 </ui-select-match>
 
                 <ui-select-choices repeat="technology.id as technology in technologies">
                     <div ng-bind-html="technology.title | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>
+        </div>
+
+        <div class="form-group" cs-form-group>
+            <label for="repo">Github repo</label>
+            <input ng-model="input.repo" class="form-control" id="title" name="repo" type="text">
         </div>
     </div>
 

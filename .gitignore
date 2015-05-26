@@ -4,6 +4,7 @@ ui/node_modules
 ui/npm-debug.log
 .idea
 .sass-cache/
+celerybeat-schedule
 
 *.sqlite3
 **/*.pyc

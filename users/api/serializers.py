@@ -47,7 +47,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInfo
-        fields = ('github_profile', 'twitch_channel')
+        fields = ('github_profile', 'stackoverflow_profile', 'twitch_channel')
 
 
 class UserSerializer(serializers.ModelSerializer):

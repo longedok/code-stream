@@ -1,23 +1,44 @@
-<div class="inner-content">
-    <ul id="stream-list">
-        <li ng-repeat="stream in streams" class="stream-entry" ng-cloak>
-            <h4>
-                <a ui-sref="main.stream({username: stream.user.username, stream: stream})">{{ stream.title }}</a>
-            </h4>
-            <div class="username-row">
-                <span><i class="fa fa-user"></i> {{ stream.user.username }}</span>
-            </div>
-            <a ui-sref="main.stream({username: stream.user.username, stream: stream})">
-                <img ng-src="{{ stream.preview_url }}" class="player-preview">
-            </a>
+<div class="inner-content container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <ul id="stream-list" class="pull-left">
+                <li ng-repeat="stream in streams" class="stream-entry" ng-cloak>
+                    <h4>
+                        <a ui-sref="main.stream({username: stream.user.username, stream: stream})">{{ stream.title }}</a>
+                    </h4>
+                    <div class="username-row">
+                        <span><i class="fa fa-user"></i> {{ stream.user.username }}</span>
+                    </div>
+                    <a ui-sref="main.stream({username: stream.user.username, stream: stream})">
+                        <img ng-src="{{ stream.preview_url }}" class="player-preview">
+                    </a>
 
-            <div class="stream-info-row clearfix">
-                <span class="started pull-left" am-time-ago="stream.started" title="{{ stream.started }}">
-                </span>
-                <span class="viewers pull-right">
-                    <i class="fa fa-eye"></i> {{ stream.viewers }}
-                </span>
+                    <div class="stream-info-row clearfix">
+                        <span class="started pull-left" am-time-ago="stream.started" title="{{ stream.started }}">
+                        </span>
+                        <span class="viewers pull-right">
+                            <i class="fa fa-eye"></i> {{ stream.viewers }}
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-2">
+            <div id="event-timeline" class="pull-right">
+                <h2>Events</h2>
+                <ul>
+                    <li ng-repeat="event in events">
+                        <span class="event-time">{{ event.created|date:'dd MMM HH:mm' }}</span>
+                        <strong>{{ event.username }}</strong>
+                        <a ui-sref="main.stream({username: event.username})">{{ event.action }}</a>
+                        {{ event.description }}
+                    </li>
+                </ul>
+
+                <button class="btn btn-default center" ng-click="loadMoreEvents()"
+                        ng-disabled="!moreEventsAvailable">Load more</button>
             </div>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>

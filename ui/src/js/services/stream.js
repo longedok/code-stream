@@ -20,3 +20,30 @@ app.factory('Technology', ['$resource', function($resource) {
 app.factory('Material', ['$resource', function($resource) {
     return $resource('/api/streams/materials/:id/:action/', {id: '@id'});
 }]);
+
+app.factory('Event', ['$resource', function($resource) {
+    return $resource('/api/streams/events/:id/:action/', {id: '@id'}, {
+        'query': {
+            method: 'GET',
+            isArray: false
+        }
+    });
+}]);
+
+app.service('EventsService', ['Event', function(Event) {
+    var self = this;
+    var nextPage;
+
+    function loadData(cursor) {
+        return Event.query({'cursor': cursor}).$promise.then(function(data) {
+            nextPage = data['next'];
+            self.hasNext = nextPage !== null;
+
+            return data['results'];
+        });
+    }
+
+    this.loadMore = function() {
+        return loadData(nextPage);
+    };
+}]);

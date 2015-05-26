@@ -1,21 +1,77 @@
-<div class="inner-content" ng-if="model.is_authenticated">
-    <form cs-form>
-        <cs-non-field-errors></cs-non-field-errors>
+<div id="profile" class="inner-content" ng-if="model.is_authenticated">
 
-        <div class="form-group" cs-form-group>
-            <label for="twitch-channel">Twitch channel:</label>
-            <input class="form-control" type="text" ng-model="model.info.twitch_channel" name="twitch_channel"
-                   id="twitch-channel">
-        </div>
+    <div class="profile-group">
+        <h2>User data</h2>
+        <form cs-form>
+            <cs-non-field-errors></cs-non-field-errors>
 
-        <div class="form-group" cs-form-group>
-            <label for="github-profile">Github profile:</label>
-            <input class="form-control" type="text" ng-model="model.info.github_profile" name="github_profile"
-                   id="github-profile">
-        </div>
+            <div class="form-group" cs-form-group>
+                <label for="username">Username:</label>
+                <input class="form-control" type="text" ng-model="model.username" name="username"
+                       id="username">
+            </div>
 
-        <button class="btn btn-primary" ng-click="save()">Save</button>
-    </form>
+            <div class="form-group" cs-form-group>
+                <label for="username">Email:</label>
+                <input class="form-control" type="text" ng-model="model.email" name="email"
+                       id="email">
+            </div>
+
+            <div class="form-group" cs-form-group>
+                <label for="twitch-channel">Twitch channel:</label>
+                <input class="form-control" type="text" ng-model="model.info.twitch_channel" name="twitch_channel"
+                       id="twitch-channel">
+            </div>
+
+            <div class="form-group" cs-form-group>
+                <label for="stackoverflow-profile">Stackoverflow profile:</label>
+                <input class="form-control" type="text" ng-model="model.info.stackoverflow_profile" name="stackoverflow_profile"
+                       id="stackoverflow-profile">
+            </div>
+
+            <div class="form-group" cs-form-group>
+                <label for="github-profile">Github profile:</label>
+                <input class="form-control" type="text" ng-model="model.info.github_profile" name="github_profile"
+                       id="github-profile">
+            </div>
+
+            <button class="btn btn-primary" ng-click="save()">Save</button>
+        </form>
+    </div>
+
+    <div class="profile-group">
+        <h2>Change password</h2>
+        <form cs-form>
+            <cs-non-field-errors></cs-non-field-errors>
+
+            <div class="form-group" cs-form-group>
+                <label for="password0">Old Password:</label>
+                <input class="form-control" type="password" ng-model="model.password0" name="password0"
+                       id="password0">
+            </div>
+
+            <div class="form-group" cs-form-group>
+                <label for="password1">New Password:</label>
+                <input class="form-control" type="password" ng-model="model.password1" name="password1"
+                       id="password1">
+            </div>
+
+            <div class="form-group" cs-form-group>
+                <label for="password1">Repeat New Password:</label>
+                <input class="form-control" type="password" ng-model="model.password2" name="password2"
+                       id="password2">
+            </div>
+
+            <button class="btn btn-primary" ng-click="save()">Save</button>
+        </form>
+    </div>
+
+    <div class="profile-group">
+        <h2>Recent streams</h2>
+        <span>No recent streams</span>
+    </div>
+
+
 </div>
 
 <div class="inner-content" ng-hide="model.is_authenticated">

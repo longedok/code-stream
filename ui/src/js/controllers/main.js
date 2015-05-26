@@ -1,21 +1,36 @@
 app.controller('MainController', [
-'$scope', '$modal', '$http', 'BackendData', 'UserService',
-function($scope, $modal, $http, BackendData, UserService) {
+'$scope', '$modal', '$http', 'BackendData', 'UserService', 'EventsService', 'Stream', 'Technology',
+function($scope, $modal, $http, BackendData, UserService, EventsService, Stream, Technology) {
     $scope.currentUser = UserService.currentUser = BackendData.user;
     $scope.streams = BackendData.streams;
     $scope.technologies = BackendData.technologies;
 
-    function onStreamsUpdated() {
-        Stream.query(function(streams) {
-            $scope.streams = streams;
-        });
-    }
-
-    var ws4redis = new WS4Redis({
-        uri: 'ws://127.0.0.1:8000/ws/streams?subscribe-broadcast&echo',
-        receive_message: onStreamsUpdated,
-        heartbeat_msg: '-- hearbeat --'
+    EventsService.loadMore().then(function(events) {
+        $scope.events = events;
+        $scope.moreEventsAvailable = EventsService.hasNext;
     });
+
+
+    var ws = new WebSocket('ws://127.0.0.1:8000/ws/main?subscribe-broadcast&echo');
+
+    ws.onmessage = function (event) {
+        var message = event.data;
+
+        var parsedMessage = JSON.parse(message),
+            type = parsedMessage['action'];
+
+        if (type == 'streams-updated') {
+            $scope.$apply(function() {
+                Stream.query(function(streams) {
+                    $scope.streams = streams;
+                });
+            });
+        } else if (type == 'events-updated') {
+            $scope.$apply(function() {
+                $scope.events = Event.query();
+            });
+        }
+    };
 
     $scope.$on('$destroy', function() {
         ws4redis.disconnect();
@@ -70,8 +85,14 @@ function($scope, $modal, $http, BackendData, UserService) {
 
     $scope.startStream = function() {
         $modal.open({
+            scope: $scope,
             templateUrl: 'templates/forms/stream.html',
-            controller: 'CreateStreamController'
+            controller: 'CreateStreamController',
+            resolve: {
+                technologies: function() {
+                    return Technology.query().$promise;
+                }
+            }
         });
     };
 
@@ -80,21 +101,27 @@ function($scope, $modal, $http, BackendData, UserService) {
             $scope.$broadcast('users.logged-out');
         })
     };
+
+    $scope.loadMoreEvents = function() {
+        EventsService.loadMore().then(function(events) {
+            Array.prototype.push.apply($scope.events, events);
+            $scope.moreEventsAvailable = EventsService.hasNext;
+        });
+    }
 }]);
 
 app.controller('CreateStreamController', [
-'$scope', '$state', '$modal', '$modalInstance', 'Stream', 'UserService', 'FormHelper',
-function($scope, $state, $modal, $modalInstance, Stream, UserService, FormHelper) {
+'$scope', '$state', '$modal', '$modalInstance', 'Stream', 'UserService', 'FormHelper', 'technologies',
+function($scope, $state, $modal, $modalInstance, Stream, UserService, FormHelper, technologies) {
     var formHelper = FormHelper($scope);
 
+    $scope.technologies = technologies;
     $scope.input = {};
     $scope.user = UserService.currentUser;
 
     $scope.submit = function() {
         formHelper.submit($scope.input, Stream.save).then(function(stream) {
             $modalInstance.close();
-
-            $state.go('main.stream', {username: $scope.user.username, stream: stream});
         });
     };
 
@@ -102,8 +129,10 @@ function($scope, $state, $modal, $modalInstance, Stream, UserService, FormHelper
         $modal.open({
             templateUrl: 'templates/forms/series.html',
             controller: [
-            '$scope', '$modalInstance', 'Series', 'FormHelper',
-            function($scope, $modalInstance, Series, FormHelper) {
+            '$scope', '$modalInstance', 'Series', 'FormHelper', 'technologies',
+            function($scope, $modalInstance, Series, FormHelper, technologies) {
+                $scope.technologies = technologies;
+
                 var formHelper = FormHelper($scope);
 
                 $scope.input = {
@@ -115,10 +144,14 @@ function($scope, $state, $modal, $modalInstance, Stream, UserService, FormHelper
                         $modalInstance.close(series);
                     });
                 };
-            }]
+            }],
+            resolve: {
+                technologies: function() {
+                    return $scope.technologies.$promise;
+                }
+            }
         }).result.then(function(series) {
                 UserService.currentUser.series.push(series);
-                console.log(UserService.currentUser);
                 $scope.input.series = series.id;
             })
     };

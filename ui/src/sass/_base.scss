@@ -1,6 +1,6 @@
 $header-height: 60px;
 $chat-width: 400px;
-$stream-entry-width: 350px;
+$stream-entry-width: 340px;
 
 $color-font-lightgray: #7B8084;
 $color-font-darkergray: #515151;
@@ -88,11 +88,36 @@ h4 {
         .player-preview {
             width: $stream-entry-width;
             height: $stream-entry-width / 1.7857;
+            border: 1px solid black;
         }
 
         .stream-info-row {
             margin-top: 5px;
         }
+    }
+}
+
+#event-timeline {
+    width: 220px;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin-bottom: 15px;
+        }
+    }
+
+    h2 {
+        margin-bottom: 15px;
+    }
+
+    .event-time {
+        background: rgb(229, 229, 229);
+        border-radius: 3px;
+        padding: 2px;
     }
 }
 
@@ -103,6 +128,51 @@ h4 {
 
 #stream-area {
     margin-right: $chat-width;
+
+    .technologies-list {
+        margin: 20px 0px;
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                font-size: 14pt;
+                display: inline-block;
+                background-color: rgb(175, 222, 247);
+                padding: 5px;
+                border-radius: 3px;
+                margin-right: 15px;
+            }
+        }
+    }
+
+    .commits-list {
+        margin: 20px 0px;
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                width: 250px;
+                font-size: 12pt;
+                display: table-cell;
+                padding-right: 10px;
+            }
+        }
+    }
+
+    .stream-info-row {
+        margin: 5px 0px;
+        font-size: 12pt;
+    }
+}
+
+.so-badge {
+    background-color: rgb(244, 121, 32);
+    border-radius: 4px;
+    padding: 1px;
 }
 
 #chat {
@@ -167,6 +237,16 @@ h4 {
         }
     }
 }
+
+
+/* PROFILE PAGE */
+#profile {
+    width: 50%;
+    .profile-group {
+        margin-bottom: 25px;
+    }
+}
+
 
 /* MODALS */
 .modal-header {

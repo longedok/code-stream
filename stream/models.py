@@ -42,3 +42,20 @@ class Material(util_models.TimeStampedModel):
 
     creator = models.ForeignKey(User)
     technology = models.ForeignKey(Technology, related_name='materials')
+
+
+class Event(util_models.TimeStampedModel):
+    STREAM_STARTED = 'stream_started'
+    STREAM_FINISHED = 'stream_finished'
+    TECHNOLOGY_ADDED = 'technology_added'
+    MATERIAL_ADDED = 'material_added'
+    EVENT_TYPE_CHOICES = (
+        (STREAM_STARTED, 'Stream Started'),
+        (STREAM_FINISHED, 'Stream Finished'),
+        (TECHNOLOGY_ADDED, 'Technology Added'),
+        (MATERIAL_ADDED, 'Material Added'),
+    )
+
+    user = models.ForeignKey(User, related_name='events')
+    type = models.CharField(choices=EVENT_TYPE_CHOICES, max_length=30)
+    description = models.TextField()

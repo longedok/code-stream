@@ -8,11 +8,13 @@
 
     <div ng-show="currentUser.is_authenticated" class="user-info pull-right">
         <a ui-sref="main.userProfile"><i class='fa fa-user'></i> {{ currentUser.username }}</a>
+        <a ui-sref="main.technologies">Technologies</a>
         <a href ng-click="startStream()">Start stream</a>
         <a href ng-click="logout()">Log out</a>
     </div>
 
     <div ng-hide="currentUser.is_authenticated" class="user-info pull-right">
+        <a ui-sref="main.technologies">Technologies</a>
         <a href ng-click="login()">Log in</a>
         <a href ng-click="createAccount()">Create account</a>
     </div>

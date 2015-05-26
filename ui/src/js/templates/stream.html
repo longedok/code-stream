@@ -1,6 +1,7 @@
 <div class="inner-content">
     <div id="stream-area">
         <h2 class="stream-title" ng-hide="stream.offline">{{ stream.title }}</h2>
+        <span>by <i class="fa fa-user"></i> <strong>{{ stream.user.username }}</strong></span>
         <span ng-show="stream.offline">This stream is currently offline</span>
 
         <div class="player" cs-player-height-resize>
@@ -15,19 +16,116 @@
                        value="hostname=www.twitch.tv&channel={{ stream.user.info.twitch_channel }}&auto_play=false&start_volume=100" />
             </object>
         </div>
+
+        <div class="stream-info-row clearfix">
+            <span class="started pull-left" am-time-ago="stream.started" title="{{ stream.started }}">
+            </span>
+            <span class="viewers pull-right">
+                <i class="fa fa-eye"></i> 3
+            </span>
+        </div>
+
+        <button class="btn btn-default"><i class="fa fa-chevron-circle-down"></i> Subscribe to <strong></stronb><i class="fa fa-user"></i> longedok</strong></button>
+        <button class="btn btn-default"><i class="fa fa-chevron-circle-down"></i> Subscribe to series</button>
+
+        <div class="technologies-list">
+            <ul>
+                <!--<li ng-repeat="technology in stream.technologies">
+                    <i class="fa fa-tags"></i> {{ technology.title }}
+                </li>-->
+                <li>
+                    <i class="fa fa-tags"></i> Django
+                </li>
+                <li>
+                    <i class="fa fa-tags"></i> AngularJS
+                </li>
+            </ul>
+        </div>
+
+        <h3 style="margin-bottom: 0">Recent commits</h3> <a href>http://github.com/longedok/diploma-project</a>
+
+        <div class="commits-list">
+            <ul>
+                <li>
+                    <span class="commit-hash">
+                        <a href>#a4799d9</a>
+                    </span>
+                    <div class="commit-message">
+                        Technologies, series, better integration of angular app
+                    </div>
+                </li>
+
+                <li>
+                    <span class="commit-hash">
+                        <a href>#2ad34af</a>
+                    </span>
+                    <div class="commit-message">
+                        Frontend was made a pure angular application, instead of django-templ…
+                    </div>
+                </li>
+
+                <li>
+                    <span class="commit-hash">
+                        <a href>#611195f</a>
+                    </span>
+                    <div class="commit-message">
+                        Changed styles a bit, converted css to sass, added some new fonts and…
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div id="chat">
+<div id="chat">
         <div class="chat-wrapper">
             <div class="messages-area">
-                <div class="chat-message" ng-repeat="message in chatMessages track by $index">
+                <!--<div class="chat-message" ng-repeat="message in chatMessages track by $index">
                     <strong>{{ message.user }}</strong>: <span ng-bind-html="message.text"></span>
+                </div>-->
+
+                <div class="chat-message">
+                    <strong>rulexec:</strong> check out this code:
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s">"input-area"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">textarea</span> <span class="n">ng</span><span class="o">-</span><span class="n">model</span><span class="o">=</span><span class="s">"input.text"</span><span class="o">&gt;&lt;/</span><span class="n">textarea</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">button</span> <span class="n">class</span><span class="o">=</span><span class="s">"btn btn-default"</span> <span class="n">ng</span><span class="o">-</span><span class="n">click</span><span class="o">=</span><span class="s">"sendChatMessage()"</span><span class="o">&gt;</span><span class="n">Send</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">label</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s">"checkbox"</span> <span class="n">ng</span><span class="o">-</span><span class="n">model</span><span class="o">=</span><span class="s">"input.code"</span><span class="o">&gt;</span> <span class="n">Code</span><span class="o">&lt;/</span><span class="n">label</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</pre></div>
+                </div>
+
+                <div class="chat-message">
+                    <strong>segg3r:</strong> what does it do?
+                </div>
+
+                <div class="chat-message">
+                    <strong>longedok <span class="so-badge">SO</span>:</strong> that's a textarea for chat, it seems
+                </div>
+
+                <div class="chat-message">
+                    <strong>rulexec:</strong> yes, you're right
+                </div>
+
+                <div class="chat-message">
+                    <strong>longedok <span class="so-badge">SO</span>:</strong> I have a nice piece of code too
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Series</span><span class="p">(</span><span class="n">util_models</span><span class="o">.</span><span class="n">TimeStampedModel</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">owner</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">'series'</span><span class="p">)</span>
+</pre></div>
+                </div>
+
+                <div class="chat-message">
+                    <strong>rulexec:</strong> looks like a Django model to me
+                </div>
+
+                <div class="chat-message">
+                    <strong>longedok <span class="so-badge">SO</span>:</strong> yep, it is a Django model
                 </div>
             </div>
             <div class="input-area">
                 <textarea ng-model="input.text"></textarea>
                 <button class="btn btn-default" ng-click="sendChatMessage()">Send</button>
-                <label><input type="checkbox" ng-model="input.code"> Code</label>
             </div>
         </div>
     </div>

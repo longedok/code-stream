@@ -6,17 +6,13 @@ function($scope, $http, stream) {
     $scope.input = {};
     $scope.chatMessages = [];
 
-    var onMessage = function(msg) {
+    var ws = new WebSocket('ws://127.0.0.1:8000/ws/chat-' + $scope.stream.user.username + '?subscribe-broadcast&echo');
+
+    ws.onmessage = function(event) {
         $scope.$apply(function() {
-            $scope.chatMessages.push(JSON.parse(msg));
+            $scope.chatMessages.push(JSON.parse(event.data));
         });
     };
-
-    var ws4redis = new WS4Redis({
-        uri: 'ws://127.0.0.1:8000/ws/streams?subscribe-broadcast&echo',
-        receive_message: onMessage,
-        heartbeat_msg: '-- hearbeat --'
-    });
 
     $scope.sendChatMessage = function() {
         $http.post('/api/chat/post/' + $scope.stream.user.username + '/', $scope.input)
@@ -27,6 +23,6 @@ function($scope, $http, stream) {
     };
 
     $scope.$on('$destroy', function() {
-        ws4redis.disconnect();
+        ws.close();
     });
 }]);
